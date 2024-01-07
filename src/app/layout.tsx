@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { Navbar, Footer } from './components'
 
 export const metadata: Metadata = {
-  title: 'Calculadora de juos compostos',
+  title: 'Calculadora de juros compostos',
   description: 'Calcule seus rendimentos',
 }
 
