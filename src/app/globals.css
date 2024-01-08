@@ -134,10 +134,14 @@ form label div p {
 
 .result p {
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
 }
 
 .result p span {
   font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .footer {
@@ -179,5 +183,20 @@ form label div p {
 
   .desc {
     width: 90%;
+  }
+
+  .error {
+    color: red;
+    font-size: .9rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+
+  form label div input {
+    width: 70%;
+  }
+
+  form label div p {
+    width: 30%;
   }
 }

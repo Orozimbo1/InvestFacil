@@ -8,16 +8,25 @@ const FormFuture = () => {
   const [fees, setFees] = useState('')
   const [months, setMonths] = useState('')
   const [result, setResult] = useState({})
+  const [error, setError] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    
-    setResult({
-      amount: amount,
-      fees: fees,
-      months: months,
-      contribution : (amount / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))).toFixed(2)
-    })
+
+    if(!amount || !fees || !months) {
+      setError(true)
+    }
+
+    if(!error) {
+      let contribution = Number((amount / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
+
+      setResult({
+        amount: Number(amount).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+        fees: fees,
+        months: months,
+        contribution : contribution.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+      })
+    }
   }
 
   return (
@@ -29,7 +38,10 @@ const FormFuture = () => {
             type="text"
             placeholder="R$ 0,00"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(e) => {
+              setAmount(e.target.value)
+              setError(false)
+            }}
           />
         </label>
         <label>
@@ -39,7 +51,10 @@ const FormFuture = () => {
               type="text"
               placeholder="0,00"
               value={fees}
-              onChange={(e) => setFees(e.target.value)}  
+              onChange={(e) => {
+                setFees(e.target.value)
+                setError(false)
+              }}  
             />
             <p>% mensal</p>
           </div>
@@ -50,19 +65,46 @@ const FormFuture = () => {
             type="text"
             placeholder="0"
             value={months}
-            onChange={(e) => setMonths(e.target.value)}  
+            onChange={(e) => {
+              setMonths(e.target.value)
+              setError(false)
+            }}  
           />
         </label>
         <input type="submit" value="Calcular" className="btn" />
       </form>
-      {result.contribution && (
-        <article>
-          <p>Investimento mensal: <span>R$ {result.contribution}</span></p>
-          <p>Juros mensal: <span>{result.fees}</span> %a.m</p>
-          <p><span>{result.months}</span> meses</p>
-          <p>Montante: <span>R$: {result.amount}</span></p>
-        </article>
+      {error && (
+        <p className="error">Todos os campos são obrigatórios.</p>
       )}
+      {result.contribution && !error ? (
+        <section className="result">
+          <p>
+            Investimento mensal: 
+            <span>
+              {result.contribution}
+            </span>
+          </p>
+          <p>
+            Juros mensal: 
+            <span>
+              {result.fees}
+            </span>
+             %a.m
+          </p>
+          <p>
+            <span>
+              {result.months}
+            </span> 
+            meses
+          </p>
+          <p>
+            Montante: 
+            <span>
+              {result.amount}
+            </span>
+          </p>
+        </section>
+      ) : ''}
     </section>
   )
 }

@@ -6,18 +6,25 @@ import React, { useState } from "react"
 const Form = () => {
   const [contribution, setContribution] = useState('')
   const [fees, setFees] = useState('')
-  const [months, setMonths] = useState('')
+  const [months, setMonths] = useState(0)
   const [result, setResult] = useState({})
+  const [error, setError] = useState(false)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
-    setResult({
-      contribution: contribution,
-      fees: fees,
-      months: months,
-      total : (contribution * ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))).toFixed(2)
-    })
+    if(!contribution || !fees || !months) {
+      setError(true)
+    }
+
+    if(!error) {
+      setResult({
+        contribution: Number(contribution),
+        fees: fees,
+        months: months,
+        total : Number((contribution * ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
+      })
+    }
   }
 
   return (
@@ -29,7 +36,10 @@ const Form = () => {
             type="text"
             placeholder="R$ 0,00"
             value={contribution}
-            onChange={(e) => setContribution(e.target.value)}
+            onChange={(e) => {
+              setContribution(e.target.value)
+              setError(false)
+            }}
           />
         </label>
         <label>
@@ -39,7 +49,10 @@ const Form = () => {
               type="text"
               placeholder="0,00"
               value={fees}
-              onChange={(e) => setFees(e.target.value)}  
+              onChange={(e) => {
+                setFees(e.target.value)
+                setError(false)
+              }}  
             />
             <p>% mensal</p>
           </div>
@@ -50,20 +63,52 @@ const Form = () => {
             type="text"
             placeholder="0"
             value={months}
-            onChange={(e) => setMonths(e.target.value)}  
+            onChange={(e) => {
+              setMonths(e.target.value)
+              setError(false)
+            }}  
           />
         </label>
         <input type="submit" value="Calcular" className="btn" />
       </form>
-      {result.total && (
-        <section className="result">
-          <p>Total investido: <span>R$: {result.contribution}</span></p>
-          <p>Rendimento Total: <span>R$: {result.total - result.contribution}</span></p>
-          <p>Juros Mensal: <span>{result.fees}</span>%a.m</p>
-          <p><span>{result.months}</span> meses</p>
-          <p>Total: <span>R$: {result.total}</span></p>
-        </section>
+      {error && (
+        <p className="error">Todos os campos são obrigatórios.</p>
       )}
+      {!error && result.total ? (
+        <section className="result">
+          <p>
+            Total investido: 
+            <span>
+              {(result.contribution * result.months).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+            </span>
+          </p>
+          <p>
+            Rendimento Juros: 
+            <span>
+               {(result.total - (result.contribution * result.months)).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+            </span>
+          </p>
+          <p>
+            Juros Mensal: 
+            <span>
+              {result.fees}
+            </span>
+            %a.m
+          </p>
+          <p>
+            <span>
+              {result.months}
+            </span>
+             meses
+          </p>
+          <p>
+            Total: 
+            <span>
+              {result.total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+            </span>
+          </p>
+        </section>
+      ) : ''}
     </section>
   )
 }
