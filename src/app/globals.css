@@ -219,4 +219,12 @@ form label div p {
   .right p {
     width: 35%;
   }
+
+  .left input {
+    width: 80%;
+  }
+
+  .left p {
+    width: 20%;
+  }
 }
