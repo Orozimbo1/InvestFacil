@@ -186,6 +186,10 @@ form label div p {
 }
 
 @media (max-width: 425px) {
+  .navbar {
+    padding: 0 1.2rem;
+  } 
+
   .navbar h2, .navbar h2 span {
     font-size: 1.2rem;
   }
