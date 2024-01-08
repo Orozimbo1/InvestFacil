@@ -10,18 +10,31 @@ const FormFuture = () => {
   const [result, setResult] = useState({})
   const [error, setError] = useState(false)
 
+  const currencyMask = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value
+    value = value.replace(/\D/g, "")
+    value = value.replace(/(\d)(\d{2})$/, "$1,$2")
+    value = value.replace(/(?=(\d{3})+(\D))\B/g, ".")
+    e.target.value = value
+    setAmount(e.target.value)
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if(!amount || !fees || !months) {
       setError(true)
+      return
     }
-
     if(!error) {
-      let contribution = Number((amount / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
+      let value = amount.replaceAll(".", "").replace(',', '.')
+      console.log(value)
+      // value = amount.replace(',', '.')
+      // console.log(value)
+      let contribution = Number((value / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
 
       setResult({
-        amount: Number(amount).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+        amount: Number(value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
         fees: fees,
         months: months,
         contribution : contribution.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
@@ -34,21 +47,24 @@ const FormFuture = () => {
       <form onSubmit={handleSubmit}>
         <label>
           <span>Montante</span>
-          <input 
-            type="text"
-            placeholder="R$ 0,00"
-            value={amount}
-            onChange={(e) => {
-              setAmount(e.target.value)
-              setError(false)
-            }}
-          />
+          <div className="left">
+            <p>R$:</p>
+            <input 
+              type="text"
+              placeholder="0,00"
+              value={amount}
+              onChange={(e) => {
+                currencyMask(e)
+                setError(false)
+              }}
+            />
+          </div>
         </label>
         <label>
           <span>Taxa de Juros</span>
-          <div>
+          <div className="right">
             <input 
-              type="text"
+              type="number"
               placeholder="0,00"
               value={fees}
               onChange={(e) => {
@@ -62,7 +78,7 @@ const FormFuture = () => {
         <label>
           <span>Qtd de Meses</span>
           <input 
-            type="text"
+            type="number"
             placeholder="0"
             value={months}
             onChange={(e) => {
@@ -76,7 +92,7 @@ const FormFuture = () => {
       {error && (
         <p className="error">Todos os campos são obrigatórios.</p>
       )}
-      {result.contribution && !error ? (
+      {result.contribution && !error && (
         <section className="result">
           <p>
             Investimento mensal: 
@@ -104,7 +120,7 @@ const FormFuture = () => {
             </span>
           </p>
         </section>
-      ) : ''}
+      )}
     </section>
   )
 }

@@ -88,24 +88,40 @@ form label div {
   align-items: center;
 }
 
-form label div input {
+form label div p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border: 1px solid rgb(182, 180, 180);
+  color: rgb(109, 109, 109);
+}
+
+.right input {
   width: 80%;
   border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-form label div p {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
-  height: 40px;
-  border: 1px solid rgb(182, 180, 180);
+.right p {
   border-left: none;
-  color: rgb(109, 109, 109);
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  width: 20%;
+}
+.left input {
+  width: 90%;
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.left p {
+  border-right: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  width: 10%;
 }
 
 .btn {
@@ -142,6 +158,13 @@ form label div p {
 .result p span {
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+.error {
+  color: red;
+  font-size: .9rem;
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .footer {
@@ -183,13 +206,6 @@ form label div p {
 
   .desc {
     width: 90%;
-  }
-
-  .error {
-    color: red;
-    font-size: .9rem;
-    margin-top: 1rem;
-    text-align: center;
   }
 
   form label div input {
