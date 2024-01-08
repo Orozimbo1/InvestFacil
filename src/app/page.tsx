@@ -11,7 +11,7 @@ export default function Home() {
       <Form />
       <h1>Veja quanto investir</h1>
       <p className='desc'>
-        Sonha com uma aposentadoria de R$5000, mas tá meio perdido? Descubra quanto investir todo mês para chegar lá! Nós simplificamos o caminho para você - é fácil, prático e pode ser o passaporte para o futuro que você deseja. Invista com sabedoria e veja seus sonhos virarem realidade!
+        Sonha com uma aposentadoria, mas tá meio perdido? Descubra quanto investir todo mês para chegar lá! Nós simplificamos o caminho para você - é fácil, prático e pode ser o passaporte para o futuro que você deseja. Invista com sabedoria e veja seus sonhos virarem realidade!
       </p>
       <FormFuture />
     </main>
