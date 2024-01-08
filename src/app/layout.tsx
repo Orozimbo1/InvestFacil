@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 
@@ -8,9 +8,14 @@ const inter = Inter({ subsets: ['latin'] })
 import { Navbar, Footer, Analytics } from './components'
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   title: 'InvestFacil | Calculadora de Juros Compostos',
   description: 'Calcule seus rendimentos',
 }
+
+export const viewport: Viewport = {
+  themeColor: "#211d24",
+};
 
 export default function RootLayout({
   children,
@@ -19,8 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-      <Analytics />
       <body className={inter.className}>
+        <Analytics />
         <Navbar />
         {children}
         <Footer />
