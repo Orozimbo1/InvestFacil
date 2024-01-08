@@ -213,10 +213,10 @@ form label div p {
   }
 
   form label div input {
-    width: 70%;
+    width: 60%;
   }
 
   form label div p {
-    width: 30%;
+    width: 40%;
   }
 }
