@@ -5,10 +5,10 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 // Components
-import { Navbar, Footer } from './components'
+import { Navbar, Footer, Analytics } from './components'
 
 export const metadata: Metadata = {
-  title: 'Calculadora de juros compostos',
+  title: 'InvestFacil | Calculadora de Juros Compostos',
   description: 'Calcule seus rendimentos',
 }
 
@@ -19,6 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
+      <Analytics />
       <body className={inter.className}>
         <Navbar />
         {children}
