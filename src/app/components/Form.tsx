@@ -29,7 +29,6 @@ const Form = () => {
 
     if(!error) {
       let value = contribution.replaceAll(".", "").replace(',', '.')
-      console.log(value)
       setResult({
         contribution: Number(value),
         fees: fees,
