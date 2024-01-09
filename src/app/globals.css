@@ -21,14 +21,9 @@ ul {
   margin: 1rem auto 3rem;
 }
 
-ul li {
-  display: flex;
-  align-items: center;
-  gap: .3rem;
-}
-
-ul li strong{
+strong{
   font-size: 1.1rem;
+  margin-right: .3rem;
 }
 
 .navbar {
