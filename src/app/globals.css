@@ -12,6 +12,25 @@ h1 {
   text-align: center;
 }
 
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  width: 55%;
+  margin: 1rem auto 3rem;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+ul li strong{
+  font-size: 1.1rem;
+}
+
 .navbar {
   display: flex;
   align-items: center;
@@ -45,15 +64,15 @@ h1 {
 }
 
 .desc {
-  width: 80%;
+  width: 60%;
   font-size: 1.1rem;
   line-height: 1.5;
-  margin: 1rem auto 4rem;
-  text-align: justify;
+  margin: 1rem auto;
+  text-align: center;
 }
 
 .form-container {
-  width: 70%;
+  width: 55%;
   margin: 0 auto;
   padding: 2rem;
   border: 1px solid rgb(182, 180, 180);
@@ -202,6 +221,10 @@ form label div p {
   .container {
     width: 90vw;
     margin: 0 auto;
+  }
+
+  ul {
+    width: 90%;
   }
 
   .form-container {
