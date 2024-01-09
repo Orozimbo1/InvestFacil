@@ -28,9 +28,6 @@ const FormFuture = () => {
     }
     if(!error) {
       let value = amount.replaceAll(".", "").replace(',', '.')
-      console.log(value)
-      // value = amount.replace(',', '.')
-      // console.log(value)
       let contribution = Number((value / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
 
       setResult({
