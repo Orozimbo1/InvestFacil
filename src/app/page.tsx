@@ -11,7 +11,7 @@ export default function Home() {
       <ul>
         <li><strong>Aporte Mensal</strong> é o valor que irá investir mensalmente.</li>
         <li><strong>Taxa de Juros</strong> é o percentual que o investimento irá render.</li>
-        <li><strong>Quantidade de meses</strong> é a quantidade de meses wm que irá fazer o aporte.</li>
+        <li><strong>Quantidade de meses</strong> é a quantidade de meses em que irá fazer o aporte.</li>
       </ul>
       <Form />
       <h1>Veja quanto investir</h1>
@@ -21,7 +21,7 @@ export default function Home() {
       <ul>
         <li><strong>Montante</strong> é o valor que espera ter.</li>
         <li><strong>Taxa de Juros</strong> é o percentual que o investimento irá render.</li>
-        <li><strong>Quantidade de meses</strong> é a quantidade de meses wm que irá fazer o aporte.</li>
+        <li><strong>Quantidade de meses</strong> é a quantidade de meses em que irá fazer o aporte.</li>
       </ul>
       <FormFuture />
     </main>
