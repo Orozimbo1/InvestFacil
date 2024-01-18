@@ -1,13 +1,14 @@
-// @ts-nocheck
 'use client'
 
 import React, { useState } from "react"
 
+import { FormFutureInterface } from "../interfaces"
+
 const FormFuture = () => {
   const [amount, setAmount] = useState('')
-  const [fees, setFees] = useState('')
-  const [months, setMonths] = useState('')
-  const [result, setResult] = useState({})
+  const [fees, setFees] = useState<number>()
+  const [months, setMonths] = useState<number>()
+  const [result, setResult] = useState<FormFutureInterface | null>()
   const [error, setError] = useState(false)
 
   const currencyMask = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,22 +20,31 @@ const FormFuture = () => {
     setAmount(e.target.value)
   }
 
+  const changeScore = (value: string): number => {
+    return Number(value.replaceAll(".", "").replace(',', '.'))
+  }
+
+  const localCurrency = (value: number): string => {
+    return value.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if(!amount || !fees || !months) {
+      setResult(null)
       setError(true)
       return
     }
     if(!error) {
-      let value = amount.replaceAll(".", "").replace(',', '.')
-      let contribution = Number((value / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
+      let value = changeScore(amount)
+      let contribution = (value / ((((1 + (fees / 100)) ** months) - 1) / (fees / 100)))
 
       setResult({
-        amount: Number(value).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}),
+        amount: localCurrency(value),
         fees: fees,
         months: months,
-        contribution : contribution.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+        contribution : localCurrency(contribution)
       })
     }
   }
@@ -63,9 +73,9 @@ const FormFuture = () => {
             <input 
               type="number"
               placeholder="0,00"
-              value={fees}
+              value={fees || ''}
               onChange={(e) => {
-                setFees(e.target.value)
+                setFees(Number(e.target.value))
                 setError(false)
               }}  
             />
@@ -77,9 +87,9 @@ const FormFuture = () => {
           <input 
             type="number"
             placeholder="0"
-            value={months}
+            value={months || ''}
             onChange={(e) => {
-              setMonths(e.target.value)
+              setMonths(Number(e.target.value))
               setError(false)
             }}  
           />
@@ -89,7 +99,7 @@ const FormFuture = () => {
       {error && (
         <p className="error">Todos os campos são obrigatórios.</p>
       )}
-      {result.contribution && !error && (
+      {result?.contribution && !error && (
         <section className="result">
           <p>
             Investimento mensal: 

@@ -1,13 +1,14 @@
-// @ts-nocheck
 'use client'
 
 import React, { useState } from "react"
 
+import { FormInterface } from "../interfaces"
+
 const Form = () => {
   const [contribution, setContribution] = useState('')
-  const [fees, setFees] = useState('')
-  const [months, setMonths] = useState('')
-  const [result, setResult] = useState({})
+  const [fees, setFees] = useState<number>()
+  const [months, setMonths] = useState<number>()
+  const [result, setResult] = useState<FormInterface | null>()
   const [error, setError] = useState(false)
 
   const currencyMask = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,21 +20,27 @@ const Form = () => {
     setContribution(e.target.value)
   }
 
+  const changeScore = (value: string): number => {
+    return Number(value.replaceAll(".", "").replace(',', '.'))
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     
     if(!contribution || !fees || !months) {
+      setResult(null)
       setError(true)
       return
     }
 
     if(!error) {
-      let value = contribution.replaceAll(".", "").replace(',', '.')
+      let value = changeScore(contribution)
+
       setResult({
-        contribution: Number(value),
+        contribution: value,
         fees: fees,
         months: months,
-        total : Number((value * ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))))
+        total : value * ((((1 + (fees / 100)) ** months) - 1) / (fees / 100))
       })
     }
   }
@@ -62,9 +69,9 @@ const Form = () => {
             <input 
               type="number"
               placeholder="0,00"
-              value={fees}
+              value={fees || ''}
               onChange={(e) => {
-                setFees(e.target.value)
+                setFees(Number(e.target.value))
                 setError(false)
               }}  
             />
@@ -76,9 +83,9 @@ const Form = () => {
           <input 
             type="number"
             placeholder="0"
-            value={months}
+            value={months || ''}
             onChange={(e) => {
-              setMonths(e.target.value)
+              setMonths(Number(e.target.value))
               setError(false)
             }}  
           />
@@ -88,7 +95,7 @@ const Form = () => {
       {error && (
         <p className="error">Todos os campos são obrigatórios.</p>
       )}
-      {!error && result.total && (
+      {!error && result?.total && (
         <section className="result">
           <p>
             Total investido: 
